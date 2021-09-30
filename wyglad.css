@@ -6,11 +6,13 @@
     background: hsla(168, 76%, 42%, 0);
     color: rgb(255, 255, 255);
     font-size: 15px;
+    font-style: italic;
 }
 
 p 
 {
     text-align: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 div 
 {
@@ -25,6 +27,7 @@ body
 
 #canvas 
 {
+    height: 100%;
     width: 80%;
     text-align:center;
 }

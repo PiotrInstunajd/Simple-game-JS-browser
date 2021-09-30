@@ -1,45 +1,32 @@
-// Create the canvas
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
-canvas.width = 1900;
+canvas.width = 1850;
 canvas.height = 700;
-canvas.style = "position: centre; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; border:5px";
+canvas.style = "position: centre; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; border: 15px solid #ffffff";
 document.body.appendChild(canvas);
 
-// Background image
-var bgReady = false;
+var bgReady = true;
 var bgImage = new Image();
-bgImage.onload = function () {
-	bgReady = true;0
-};
 bgImage.src = "images/background.png";
 
-// Hero image
-var heroReady = false;
+var heroReady = true;
 var heroImage = new Image();
-heroImage.onload = function () {
-	heroReady = true;
-};
 heroImage.src = "images/hero.png";
 
-// Eye image
-var eyeReady = false;
+var eyeReady = true;
 var eyeImage = new Image();
-eyeImage.onload = function () {
-	eyeReady = true;
-};
 eyeImage.src = "images/eye.png";
 
-// Game objects
+//Speed
 var hero = {
-	speed: 386 // movement in pixels per second
+	speed: 386 
 };
 var eye = {
-	speed: 128
+	speed: 0
 };
 var eyeCaught = 0;
 
-// Handle keyboard controls
+//Kontrolki
 var keysDown = {};
 
 addEventListener("keydown", function (e) {
@@ -50,49 +37,52 @@ addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
 }, false);
 
-// Reset the game when the player catches a eye
+//Centra i reset
 var reset = function () {
 	hero.x = canvas.width / 2;
 	hero.y = canvas.height / 2;
 
-	// Throw the eye somewhere on the screen randomly
+	
 	eye.x = 96 + (Math.random() * (canvas.width - 500));
 	eye.y = 96 + (Math.random() * (canvas.height - 500));
 };
 
 // Update game objects
-var update = function (modifier) {
-	if (38 in keysDown) { // Player holding up
+var update = function (modifier) 	{
+	//Gora
+	if (38 in keysDown) { 
 		hero.y -= hero.speed * modifier;
 	}
-    if (87 in keysDown) { // Player holding up
+	//Gora
+    if (87 in keysDown) { 
 		hero.y -= hero.speed * modifier;
 	}
-	if (40 in keysDown) { // Player holding down
+	//Dol
+	if (40 in keysDown) { 
 		hero.y += hero.speed * modifier;
     }
-    
-    if ( 83 in keysDown) { // Player holding down
+	//Dol
+    if ( 83 in keysDown) { 
     hero.y += hero.speed * modifier;
     }
-
-	if (37 in keysDown) { // Player holding left
+	//Lewo
+	if (37 in keysDown) { 
 		hero.x -= hero.speed * modifier;
 	}
-
-    if (65 in keysDown) { // Player holding left
+	//Lewo
+    if (65 in keysDown) { 
 		hero.x -= hero.speed * modifier;
 	}
-    
-	if (39 in keysDown) { // Player holding right
+	//Prawo
+	if (39 in keysDown) { 
+		hero.x += hero.speed * modifier;
+	}
+	//Prawo
+    if (68 in keysDown) { 
 		hero.x += hero.speed * modifier;
 	}
 
-    if (68 in keysDown) { // Player holding right
-		hero.x += hero.speed * modifier;
-	}
-
-	// Are they touching?
+	//Touch scan
 	if (
 		hero.x <= (eye.x + 64)
 		&& eye.x <= (hero.x + 64)
@@ -104,7 +94,7 @@ var update = function (modifier) {
 	}
 };
 
-// Draw everything
+//Draw
 var render = function () {
 	if (bgReady) {
 		ctx.drawImage(bgImage, 0, 0);
@@ -118,40 +108,31 @@ var render = function () {
 		ctx.drawImage(eyeImage, eye.x, eye.y);
 	}
 
-	// Score
+	//Wynik
 	ctx.fillStyle = "rgb(42, 30, 215)";
-	ctx.font = "46px Helvetica";
+	ctx.font = "55px Lora";
 	ctx.textAlign = "start";
 	ctx.textBaseline = "top";
 	ctx.fillText("Eyeball collection: " + eyeCaught, 32, 32);
 
-	if (eyeCaught == 10)
-	document.writeln("Winner");
-	
+	if (eyeCaught == 5)
+	document.writeln("YOU WIN");
 
 };
 
-// The main game loop
-var main = function () {
-	var now = Date.now();
-	var delta = now - then;
+//
+var loop = function () {
+	var teraz = Date.now();
+	var x = teraz - later;
 
-	update(delta / 1000);
+	update(x / 1000);
 	render();
 
-	then = now;
+	later = teraz;
 
-	// Request to do this again ASAP
-	requestAnimationFrame(main);
+	requestAnimationFrame(loop);
 };
 
-// Cross-browser support for requestAnimationFrame
-var w = window;
-requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
-
-
-// Let's play this game!
-var then = Date.now();
+var later = Date.now();
 reset();
-main();
-
+loop();
