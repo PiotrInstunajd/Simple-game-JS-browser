@@ -26,7 +26,7 @@ var eye = {
 };
 var eyeCaught = 0;
 
-//Kontrolki
+//Control keys
 var keysDown = {};
 
 addEventListener("keydown", function (e) {
@@ -47,7 +47,7 @@ var reset = function () {
 	eye.y = 96 + (Math.random() * (canvas.height - 500));
 };
 
-// Update game objects
+//Control Keys2
 var update = function (modifier) 	{
 	//Gora
 	if (38 in keysDown) { 
@@ -120,7 +120,7 @@ var render = function () {
 
 };
 
-//
+//Game
 var loop = function () {
 	var teraz = Date.now();
 	var x = teraz - later;
