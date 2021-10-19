@@ -43,8 +43,8 @@ var reset = function () {
 	hero.y = canvas.height / 2;
 
 	
-	eye.x = 96 + (Math.random() * (canvas.width - 500));
-	eye.y = 96 + (Math.random() * (canvas.height - 500));
+	eye.x = 250 + (Math.random() * (canvas.width - 500));
+	eye.y = 250 + (Math.random() * (canvas.height - 500));
 };
 
 //Control Keys2
